@@ -634,6 +634,60 @@ button{cursor:pointer;border:none;background:none}
   input, select, textarea {
     font-size: 16px !important;
   }
+
+  /* Make category filters horizontally scrollable on mobile (saves vertical space) */
+  .vfilters {
+    flex-wrap: nowrap;
+    overflow-x: auto;
+    padding-bottom: 6px;
+    margin: 0 -14px 12px;
+    padding: 2px 14px 6px;
+    -webkit-overflow-scrolling: touch;
+    scrollbar-width: none;
+  }
+  .vfilters::-webkit-scrollbar {
+    display: none;
+  }
+
+  /* Re-layout password entries on mobile to prevent clipping & overlapping */
+  .pw-card {
+    grid-template-columns: 46px 1fr;
+    grid-template-areas:
+      "avatar body"
+      "badges badges"
+      "actions actions";
+    gap: 10px 12px;
+    padding: 12px 14px;
+  }
+  .pw-av-wrap {
+    grid-area: avatar;
+    align-self: start;
+    margin-top: 2px;
+  }
+  .pw-body {
+    grid-area: body;
+    min-width: 0;
+  }
+  .pw-badges {
+    grid-area: badges;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: flex-start;
+    gap: 8px;
+    min-width: 0;
+    margin-top: 4px;
+    padding-top: 4px;
+  }
+  .pw-acts {
+    grid-area: actions;
+    display: flex;
+    justify-content: flex-end;
+    gap: 10px;
+    border-top: 1px dashed var(--bdr);
+    padding-top: 8px;
+    margin-top: 6px;
+  }
 }
 @media(max-width:500px){.qs-row{grid-template-columns:1fr 1fr}.health-right{display:none}.auth-card{padding:24px 16px}.tpl-grid{grid-template-columns:repeat(auto-fill,minmax(110px,1fr))}.vsearch-row{flex-direction:column}}
 
