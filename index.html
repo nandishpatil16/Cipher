@@ -200,7 +200,6 @@
       <button class="tb-menu" onclick="toggleSb()"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="3" y1="12" x2="21" y2="12"/><line x1="3" y1="6" x2="21" y2="6"/><line x1="3" y1="18" x2="21" y2="18"/></svg></button>
       <div class="tb-titles">
         <h2 class="tb-title" id="tb-title">Dashboard</h2>
-        <span class="tb-sub" id="tb-sub"></span>
       </div>
       <div class="tb-right">
         <button class="tb-icon-btn" onclick="toggleClipHistory()" id="clip-btn" title="Clipboard history">
@@ -209,7 +208,7 @@
         </button>
         <button class="tb-add" onclick="openModal()">
           <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" width="14" height="14"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
-          Add Password
+          <span>Add Password</span>
         </button>
       </div>
     </header>
@@ -537,7 +536,11 @@
         <h4>📱 App Installation</h4>
         <p>Install Cipher to your device as a standalone application for fast, offline access.</p>
         <button class="btn-primary" id="settings-install-btn" onclick="installPWA()" style="width:100%;display:none;margin-bottom:8px">Install Cipher App</button>
-        <span id="settings-pwa-status" style="font-size:.78rem;color:var(--tx3);font-weight:500">Your browser supports installing this app.</span>
+        <span id="settings-pwa-status" style="font-size:.78rem;color:var(--tx3);font-weight:500;display:block;margin-bottom:8px">Your browser supports installing this app.</span>
+        <div style="background:var(--bg2);padding:10px;border-radius:var(--r-sm);border:1px solid var(--bdr);font-size:.76rem;color:var(--tx2);line-height:1.4">
+          🤖 <strong>Want a regular Android APK?</strong><br>
+          You can compile this site into a downloadable APK instantly using <a href="https://www.pwabuilder.com/" target="_blank" style="color:var(--pu);font-weight:600;text-decoration:underline">PWABuilder</a> (free service by Microsoft). Just paste your hosted URL there and download the APK!
+        </div>
       </div>
       <div class="settings-section danger-zone">
         <h4>⚠️ Danger Zone</h4>

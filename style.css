@@ -611,8 +611,27 @@ button{cursor:pointer;border:none;background:none}
   .dash-grid{grid-template-columns:1fr}
   .dash-card.span2{grid-column:1 / -1}
   
-  /* Prevent iOS zoom on input/select focus by ensuring font-size is at least 16px */
-  input, select, textarea, .finput, #vault-search, #tpl-search, .sb-search input, .gc-select {
+  /* Optimize topbar space on mobile to prevent title wrapping */
+  .tb {
+    padding: 0 12px;
+    gap: 8px;
+  }
+  .tb-add span {
+    display: none;
+  }
+  .tb-add {
+    padding: 0;
+    width: 36px;
+    height: 36px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: var(--r-sm);
+    min-width: 36px;
+  }
+  
+  /* Prevent iOS zoom on input/select/textarea focus by ensuring font-size is at least 16px */
+  input, select, textarea {
     font-size: 16px !important;
   }
 }

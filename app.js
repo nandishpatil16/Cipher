@@ -215,7 +215,7 @@ function enterApp(){
   applyTheme(savedTheme);
   const savedAL=+localStorage.getItem(AL_KEY)||0;
   setAutoLock(savedAL,true);
-  setGreeting();setTip();renderAll();goTo('dashboard');genPassword();
+  setTip();renderAll();goTo('dashboard');genPassword();
   renderTemplateGrid();
 }
 function lockVault(){
@@ -280,13 +280,6 @@ function nukeVault(){
   localStorage.removeItem(AL_KEY);
   closeSettings();lockVault();
   toast('All vault data deleted.','er');
-}
-
-// ── Greeting ──────────────────────────────────────
-function setGreeting(){
-  const h=new Date().getHours();
-  const g=h<5?'👋 Welcome back':h<12?'☀️ Good morning':h<17?'👋 Good afternoon':h<21?'🌅 Good evening':'👋 Welcome back';
-  $('tb-sub').textContent=g;
 }
 
 // ── Navigation ────────────────────────────────────
