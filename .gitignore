@@ -1,0 +1,16 @@
+# OS metadata files
+.DS_Store
+Thumbs.db
+
+# IDE configuration
+.vscode/
+.idea/
+*.suo
+*.ntvs*
+*.njsproj
+*.sln
+*.swp
+
+# Local system/agent logs & scratch files
+*.log
+task.md

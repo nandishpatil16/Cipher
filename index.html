@@ -1,0 +1,540 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0"/>
+  <title>Cipher — Password Manager</title>
+  <meta name="description" content="Cipher — military-grade AES-256-GCM password manager. Zero-knowledge, runs entirely in your browser."/>
+  <link rel="icon" href="logo.png"/>
+  <link rel="preconnect" href="https://fonts.googleapis.com"/>
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,300;14..32,400;14..32,500;14..32,600;14..32,700&family=Space+Grotesk:wght@600;700;800&display=swap" rel="stylesheet"/>
+  <link rel="stylesheet" href="style.css"/>
+</head>
+<body>
+
+<!-- ═══════ SPLASH ════════ -->
+<div id="splash" class="splash">
+  <div class="splash-logo">
+    <div class="splash-shield">
+      <svg viewBox="0 0 80 90" fill="none"><defs><linearGradient id="spg" x1="0" y1="0" x2="80" y2="90" gradientUnits="userSpaceOnUse"><stop stop-color="#7c3aed"/><stop offset="1" stop-color="#6366f1"/></linearGradient></defs>
+        <path d="M40 3L5 16v26C5 62.5 19.5 79.5 40 86 60.5 79.5 75 62.5 75 42V16L40 3z" fill="url(#spg)"/>
+        <line x1="20" y1="35" x2="28" y2="35" stroke="rgba(255,255,255,0.25)" stroke-width="1.5" stroke-linecap="round"/>
+        <line x1="52" y1="35" x2="60" y2="35" stroke="rgba(255,255,255,0.25)" stroke-width="1.5" stroke-linecap="round"/>
+        <rect x="27" y="40" width="26" height="20" rx="5" fill="white" opacity="0.95"/>
+        <path d="M32 40v-6a8 8 0 0 1 16 0v6" stroke="white" stroke-width="3.5" stroke-linecap="round" fill="none"/>
+        <circle cx="40" cy="49" r="3.5" fill="#7c3aed"/>
+        <rect x="38.5" y="50" width="3" height="6" rx="1.5" fill="#7c3aed"/>
+      </svg>
+    </div>
+    <div class="splash-ring"></div>
+  </div>
+  <div class="splash-name">Cipher</div>
+  <div class="splash-tagline">Your digital fortress</div>
+  <div class="splash-dots"><div class="sd"></div><div class="sd"></div><div class="sd"></div></div>
+</div>
+
+<!-- ═══════ AUTH ════════ -->
+<div id="auth-screen" class="auth-screen hidden">
+  <div class="auth-bg">
+    <div class="auth-mesh-1"></div><div class="auth-mesh-2"></div><div class="auth-mesh-3"></div>
+    <div class="auth-particles" id="auth-particles"></div>
+  </div>
+  <div class="auth-left">
+    <div class="auth-brand">
+      <div class="auth-shield-wrap">
+        <svg viewBox="0 0 80 90" fill="none" width="64" height="72"><defs><linearGradient id="ag_a" x1="0" y1="0" x2="80" y2="90" gradientUnits="userSpaceOnUse"><stop stop-color="#7c3aed"/><stop offset="1" stop-color="#6366f1"/></linearGradient></defs>
+          <path d="M40 3L5 16v26C5 62.5 19.5 79.5 40 86 60.5 79.5 75 62.5 75 42V16L40 3z" fill="url(#ag_a)"/>
+          <rect x="27" y="40" width="26" height="20" rx="5" fill="white" opacity="0.95"/>
+          <path d="M32 40v-6a8 8 0 0 1 16 0v6" stroke="white" stroke-width="3.5" stroke-linecap="round" fill="none"/>
+          <circle cx="40" cy="49" r="3.5" fill="#7c3aed"/>
+          <rect x="38.5" y="50" width="3" height="6" rx="1.5" fill="#7c3aed"/>
+        </svg>
+        <div class="auth-shield-glow"></div>
+      </div>
+      <h1 class="auth-brand-name">Cipher</h1>
+      <p class="auth-brand-tagline">Encrypt everything.<br/>Forget nothing.</p>
+      <div class="auth-trust-badges">
+        <div class="trust-badge"><span>🔐</span><div><strong>AES-256-GCM</strong><span>Military-grade encryption</span></div></div>
+        <div class="trust-badge"><span>🌐</span><div><strong>Zero Knowledge</strong><span>We never see your data</span></div></div>
+        <div class="trust-badge"><span>⚡</span><div><strong>Local-first</strong><span>No server, no risk</span></div></div>
+        <div class="trust-badge"><span>🛡️</span><div><strong>Open Standard</strong><span>Web Crypto API</span></div></div>
+      </div>
+    </div>
+  </div>
+  <div class="auth-right">
+    <div class="auth-card">
+      <div class="auth-card-logo">
+        <svg viewBox="0 0 80 90" fill="none" width="22" height="25"><defs><linearGradient id="ag_b" x1="0" y1="0" x2="80" y2="90" gradientUnits="userSpaceOnUse"><stop stop-color="#7c3aed"/><stop offset="1" stop-color="#6366f1"/></linearGradient></defs>
+          <path d="M40 3L5 16v26C5 62.5 19.5 79.5 40 86 60.5 79.5 75 62.5 75 42V16L40 3z" fill="url(#ag_b)"/>
+          <rect x="27" y="40" width="26" height="20" rx="5" fill="white" opacity="0.95"/>
+          <path d="M32 40v-6a8 8 0 0 1 16 0v6" stroke="white" stroke-width="3.5" stroke-linecap="round" fill="none"/>
+          <circle cx="40" cy="49" r="3.5" fill="#7c3aed"/>
+          <rect x="38.5" y="50" width="3" height="6" rx="1.5" fill="#7c3aed"/>
+        </svg>
+        <span>Cipher</span>
+      </div>
+      <div class="auth-tabs">
+        <button id="tab-login" class="auth-tab active" onclick="switchTab('login')">Sign In</button>
+        <button id="tab-register" class="auth-tab" onclick="switchTab('register')">Create Vault</button>
+        <div class="tab-ink" id="tab-ink"></div>
+      </div>
+      <!-- Login -->
+      <form id="login-form" class="auth-form" onsubmit="handleLogin(event)">
+        <div class="fgroup"><input type="password" id="login-password" class="finput" placeholder=" " required autocomplete="current-password"/><label class="flabel">Master Password</label>
+          <button type="button" class="feye" onclick="toggleVis('login-password',this)" tabindex="-1"><svg class="ico-eye" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/><circle cx="12" cy="12" r="3"/></svg><svg class="ico-eye-off hidden" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M17.94 17.94A10.07 10.07 0 0 1 12 20c-7 0-11-8-11-8a18.45 18.45 0 0 1 5.06-5.94M9.9 4.24A9.12 9.12 0 0 1 12 4c7 0 11 8 11 8a18.5 18.5 0 0 1-2.16 3.19m-6.72-1.07a3 3 0 1 1-4.24-4.24"/><line x1="1" y1="1" x2="23" y2="23"/></svg></button>
+        </div>
+        <div id="login-err" class="ferr hidden"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="14" height="14"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg><span></span></div>
+        <button type="submit" class="btn-auth" id="login-btn"><span>Unlock Vault</span><div class="btn-spinner hidden"><div class="sp"></div></div><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" width="17" height="17"><rect x="3" y="11" width="18" height="11" rx="2"/><path d="M7 11V7a5 5 0 0 1 9.9-1"/></svg></button>
+      </form>
+      <!-- Register -->
+      <form id="register-form" class="auth-form hidden" onsubmit="handleRegister(event)">
+        <div class="fgroup"><input type="password" id="reg-pw" class="finput" placeholder=" " required oninput="updateRegStr(this.value)" autocomplete="new-password"/><label class="flabel">Master Password</label>
+          <button type="button" class="feye" onclick="toggleVis('reg-pw',this)" tabindex="-1"><svg class="ico-eye" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/><circle cx="12" cy="12" r="3"/></svg><svg class="ico-eye-off hidden" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M17.94 17.94A10.07 10.07 0 0 1 12 20c-7 0-11-8-11-8a18.45 18.45 0 0 1 5.06-5.94M9.9 4.24A9.12 9.12 0 0 1 12 4c7 0 11 8 11 8a18.5 18.5 0 0 1-2.16 3.19m-6.72-1.07a3 3 0 1 1-4.24-4.24"/><line x1="1" y1="1" x2="23" y2="23"/></svg></button>
+        </div>
+        <div class="str-row"><div class="str-segs"><div class="ss" id="ss0"></div><div class="ss" id="ss1"></div><div class="ss" id="ss2"></div><div class="ss" id="ss3"></div></div><span class="str-lbl" id="str-lbl"></span></div>
+        <div class="fgroup"><input type="password" id="reg-confirm" class="finput" placeholder=" " required autocomplete="new-password"/><label class="flabel">Confirm Password</label></div>
+        <div id="register-err" class="ferr hidden"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="14" height="14"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg><span></span></div>
+        <button type="submit" class="btn-auth" id="register-btn"><span>Create My Vault</span><div class="btn-spinner hidden"><div class="sp"></div></div><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" width="17" height="17"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg></button>
+        <p class="auth-note">⚠ Forget master password = vault lost forever. There is no recovery.</p>
+      </form>
+    </div>
+  </div>
+</div>
+
+
+<!-- ═══════ APP SHELL ════════ -->
+<div id="app" class="app hidden">
+
+  <!-- Sidebar -->
+  <aside class="sb" id="sb">
+    <div class="sb-head">
+      <div class="sb-logo-wrap">
+        <svg viewBox="0 0 80 90" fill="none" width="26" height="30"><defs><linearGradient id="ag_sb" x1="0" y1="0" x2="80" y2="90" gradientUnits="userSpaceOnUse"><stop stop-color="#7c3aed"/><stop offset="1" stop-color="#6366f1"/></linearGradient></defs>
+          <path d="M40 3L5 16v26C5 62.5 19.5 79.5 40 86 60.5 79.5 75 62.5 75 42V16L40 3z" fill="url(#ag_sb)"/>
+          <rect x="27" y="40" width="26" height="20" rx="5" fill="white" opacity="0.95"/>
+          <path d="M32 40v-6a8 8 0 0 1 16 0v6" stroke="white" stroke-width="3.5" stroke-linecap="round" fill="none"/>
+          <circle cx="40" cy="49" r="3.5" fill="#7c3aed"/>
+          <rect x="38.5" y="50" width="3" height="6" rx="1.5" fill="#7c3aed"/>
+        </svg>
+        <span class="sb-logo-text">Cipher</span>
+      </div>
+      <div class="sb-status-row">
+        <div class="sb-status"><div class="sb-dot"></div><span>Vault Active</span></div>
+        <div class="autolock-badge hidden" id="al-badge" title="Auto-lock timer">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="11" height="11"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
+          <span id="al-timer">—</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="sb-search">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="14" height="14"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.35-4.35"/></svg>
+      <input type="text" id="sb-search" placeholder="Quick search…" oninput="quickSearch(this.value)" autocomplete="off"/>
+    </div>
+
+    <nav class="sb-nav">
+      <span class="sb-section-lbl">Main</span>
+      <button class="sb-btn active" data-view="dashboard" onclick="goTo('dashboard')">
+        <div class="sb-ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="7" height="7" rx="2"/><rect x="14" y="3" width="7" height="7" rx="2"/><rect x="3" y="14" width="7" height="7" rx="2"/><rect x="14" y="14" width="7" height="7" rx="2"/></svg></div>
+        <span>Dashboard</span>
+      </button>
+      <button class="sb-btn" data-view="vault" onclick="goTo('vault')">
+        <div class="sb-ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="11" width="18" height="11" rx="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg></div>
+        <span>My Vault</span>
+        <span class="sb-badge" id="sb-count">0</span>
+      </button>
+      <button class="sb-btn" data-view="favorites" onclick="goTo('favorites')">
+        <div class="sb-ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg></div>
+        <span>Favorites</span>
+        <span class="sb-badge star" id="sb-fav-count">0</span>
+      </button>
+      <span class="sb-section-lbl">Tools</span>
+      <button class="sb-btn" data-view="generator" onclick="goTo('generator')">
+        <div class="sb-ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 22c5.523 0 10-4.477 10-10S17.523 2 12 2 2 6.477 2 12s4.477 10 10 10z"/><path d="m9 12 2 2 4-4"/></svg></div>
+        <span>Generator</span>
+      </button>
+      <button class="sb-btn" data-view="audit" onclick="goTo('audit')">
+        <div class="sb-ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg></div>
+        <span>Security Audit</span>
+        <span class="sb-badge danger" id="sb-issues">0</span>
+      </button>
+    </nav>
+
+    <div class="sb-foot">
+      <div class="sb-foot-row">
+        <button class="sb-foot-btn" onclick="exportVault()" title="Export Vault">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
+          <span>Export</span>
+        </button>
+        <button class="sb-foot-btn" onclick="openSettings()" title="Settings">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1-2.83 2.83l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-4 0v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83-2.83l.06-.06A1.65 1.65 0 0 0 4.68 15a1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1 0-4h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 2.83-2.83l.06.06A1.65 1.65 0 0 0 9 4.68a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 4 0v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 2.83l-.06.06A1.65 1.65 0 0 0 19.4 9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 0 4h-.09a1.65 1.65 0 0 0-1.51 1z"/></svg>
+          <span>Settings</span>
+        </button>
+        <button class="sb-foot-btn" onclick="toggleDark()" id="theme-btn">
+          <svg id="ico-moon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg>
+          <svg id="ico-sun" class="hidden" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="5"/><line x1="12" y1="1" x2="12" y2="3"/><line x1="12" y1="21" x2="12" y2="23"/><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"/><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"/><line x1="1" y1="12" x2="3" y2="12"/><line x1="21" y1="12" x2="23" y2="12"/><line x1="4.22" y1="19.78" x2="5.64" y2="18.36"/><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"/></svg>
+          <span id="theme-lbl">Dark</span>
+        </button>
+      </div>
+      <button class="sb-lock" onclick="lockVault()">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="11" width="18" height="11" rx="2"/><path d="M7 11V7a5 5 0 0 1 9.9-1"/></svg>
+        Lock Vault
+      </button>
+    </div>
+  </aside>
+
+  <!-- Main -->
+  <main class="main" id="main">
+    <!-- Topbar -->
+    <header class="tb">
+      <button class="tb-menu" onclick="toggleSb()"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="3" y1="12" x2="21" y2="12"/><line x1="3" y1="6" x2="21" y2="6"/><line x1="3" y1="18" x2="21" y2="18"/></svg></button>
+      <div class="tb-titles">
+        <h2 class="tb-title" id="tb-title">Dashboard</h2>
+        <span class="tb-sub" id="tb-sub"></span>
+      </div>
+      <div class="tb-right">
+        <button class="tb-icon-btn" onclick="toggleClipHistory()" id="clip-btn" title="Clipboard history">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M16 4h2a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2h2"/><rect x="8" y="2" width="8" height="4" rx="1" ry="1"/></svg>
+          <span class="tb-icon-dot hidden" id="clip-dot"></span>
+        </button>
+        <button class="tb-add" onclick="openModal()">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" width="14" height="14"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
+          Add Password
+        </button>
+      </div>
+    </header>
+
+    <!-- Clipboard History Dropdown -->
+    <div class="clip-dropdown hidden" id="clip-dropdown">
+      <div class="clip-hdr">
+        <span>📋 Clipboard History</span>
+        <button onclick="clearClipHistory()">Clear</button>
+      </div>
+      <div id="clip-list"><div class="clip-empty">Nothing copied yet</div></div>
+    </div>
+
+    <!-- ─── DASHBOARD ─── -->
+    <section id="view-dashboard" class="view active">
+      <div class="health-banner">
+        <div class="health-left">
+          <div class="health-ring-wrap">
+            <svg viewBox="0 0 100 100" class="health-svg">
+              <circle cx="50" cy="50" r="42" fill="none" stroke="rgba(255,255,255,0.2)" stroke-width="8"/>
+              <circle cx="50" cy="50" r="42" fill="none" stroke="white" stroke-width="8" stroke-dasharray="263.9" stroke-dashoffset="263.9" id="health-arc" stroke-linecap="round" transform="rotate(-90 50 50)"/>
+            </svg>
+            <div class="health-ring-inner"><span id="health-pct">—</span><small>Health</small></div>
+          </div>
+          <div class="health-text">
+            <h3 id="health-title">Vault Health</h3>
+            <p id="health-desc">Add passwords to see your score</p>
+            <div class="health-str-dist" id="health-str-dist"></div>
+          </div>
+        </div>
+        <div class="health-right">
+          <div class="hms" onclick="goTo('vault')"><div class="hms-val" id="h-total">0</div><div class="hms-lbl">Total</div></div>
+          <div class="hms" onclick="goTo('favorites')"><div class="hms-val" id="h-fav">0</div><div class="hms-lbl">Starred</div></div>
+          <div class="hms warn" onclick="goTo('audit')"><div class="hms-val" id="h-weak">0</div><div class="hms-lbl">Weak</div></div>
+          <div class="hms danger" onclick="goTo('audit')"><div class="hms-val" id="h-reused">0</div><div class="hms-lbl">Reused</div></div>
+        </div>
+      </div>
+
+      <div class="qs-row">
+        <div class="qs-card c1" onclick="goTo('vault')"><div class="qs-icon">🔑</div><div class="qs-val" id="qs-total">0</div><div class="qs-lbl">Passwords</div></div>
+        <div class="qs-card c2" onclick="goTo('favorites')"><div class="qs-icon">⭐</div><div class="qs-val" id="qs-fav">0</div><div class="qs-lbl">Favorites</div></div>
+        <div class="qs-card c3" onclick="goTo('audit')"><div class="qs-icon">🛡️</div><div class="qs-val" id="qs-secure">0</div><div class="qs-lbl">Secure</div></div>
+        <div class="qs-card c4" onclick="goTo('audit')"><div class="qs-icon">⚠️</div><div class="qs-val" id="qs-issues">0</div><div class="qs-lbl">Issues</div></div>
+      </div>
+
+      <div class="dash-grid">
+        <div class="dash-card span2">
+          <div class="dash-card-hdr"><h3>Recent Passwords</h3><button class="lnk-btn" onclick="goTo('vault')">View all →</button></div>
+          <div id="dash-recent"></div>
+        </div>
+        <div class="dash-card">
+          <div class="dash-card-hdr"><h3>By Category</h3></div>
+          <div id="dash-cats"></div>
+        </div>
+        <div class="dash-card tips-card">
+          <div class="tips-icon">💡</div>
+          <div class="tips-body"><h4 id="tip-title">Security Tip</h4><p id="tip-text"></p></div>
+          <button class="tips-next" onclick="nextTip()"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M12 5l7 7-7 7"/></svg></button>
+        </div>
+      </div>
+    </section>
+
+    <!-- ─── VAULT ─── -->
+    <section id="view-vault" class="view">
+      <div class="vault-bar">
+        <div class="vsearch-row">
+          <div class="vsearch">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.35-4.35"/></svg>
+            <input type="text" id="vault-search" placeholder="Search passwords, tags, usernames…" oninput="renderVault()"/>
+            <button class="vsearch-clear hidden" id="v-clear" onclick="clearVSearch()">✕</button>
+          </div>
+          <button class="btn-outline" onclick="openTemplates()">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="14" height="14"><path d="M12 2H2v10l9.29 9.29c.94.94 2.48.94 3.42 0l6.58-6.58c.94-.94.94-2.48 0-3.42L12 2z"/><path d="M7 7h.01"/></svg>
+            Quick Add
+          </button>
+        </div>
+        <!-- Category Filters with counts -->
+        <div class="vfilters" id="vfilters">
+          <button class="vf active" data-cat="all" onclick="setFilter('all',this)">
+            <span class="vf-icon">🔐</span><span class="vf-lbl">All</span><span class="vf-cnt" id="fc-all">0</span>
+          </button>
+          <button class="vf" data-cat="social" onclick="setFilter('social',this)">
+            <span class="vf-icon">📱</span><span class="vf-lbl">Social</span><span class="vf-cnt" id="fc-social">0</span>
+          </button>
+          <button class="vf" data-cat="work" onclick="setFilter('work',this)">
+            <span class="vf-icon">💼</span><span class="vf-lbl">Work</span><span class="vf-cnt" id="fc-work">0</span>
+          </button>
+          <button class="vf" data-cat="finance" onclick="setFilter('finance',this)">
+            <span class="vf-icon">💳</span><span class="vf-lbl">Finance</span><span class="vf-cnt" id="fc-finance">0</span>
+          </button>
+          <button class="vf" data-cat="personal" onclick="setFilter('personal',this)">
+            <span class="vf-icon">👤</span><span class="vf-lbl">Personal</span><span class="vf-cnt" id="fc-personal">0</span>
+          </button>
+          <button class="vf" data-cat="gaming" onclick="setFilter('gaming',this)">
+            <span class="vf-icon">🎮</span><span class="vf-lbl">Gaming</span><span class="vf-cnt" id="fc-gaming">0</span>
+          </button>
+          <button class="vf" data-cat="other" onclick="setFilter('other',this)">
+            <span class="vf-icon">📦</span><span class="vf-lbl">Other</span><span class="vf-cnt" id="fc-other">0</span>
+          </button>
+        </div>
+      </div>
+      <div id="vault-list" class="vlist"></div>
+    </section>
+
+    <!-- ─── FAVORITES ─── -->
+    <section id="view-favorites" class="view">
+      <div class="fav-header">
+        <div class="fav-hero-icon">⭐</div>
+        <div><h3 class="fav-title">Favorites</h3><p class="fav-sub">Your starred passwords for instant access</p></div>
+      </div>
+      <div id="fav-list" class="vlist"></div>
+    </section>
+
+    <!-- ─── GENERATOR ─── -->
+    <section id="view-generator" class="view">
+      <div class="gen-layout">
+        <div class="gen-display">
+          <div class="gen-display-inner">
+            <div class="gen-display-label">Generated Password</div>
+            <div class="gen-pw-box">
+              <div class="gen-pw-txt" id="gen-txt">Click Generate</div>
+              <button class="gen-copy" id="gen-copy" onclick="copyGen()"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="9" y="9" width="13" height="13" rx="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg></button>
+            </div>
+            <div class="gen-str-bar"><div class="gen-str-fill" id="gen-sfill"></div></div>
+            <div class="gen-str-info"><span id="gen-str-lbl">—</span><span id="gen-entropy">Entropy: —</span></div>
+          </div>
+          <div class="gen-mode-tabs">
+            <button class="gmt active" onclick="setGenMode('random',this)">🎲 Random</button>
+            <button class="gmt" onclick="setGenMode('passphrase',this)">📖 Passphrase</button>
+            <button class="gmt" onclick="setGenMode('pin',this)">🔢 PIN</button>
+          </div>
+        </div>
+        <div class="gen-controls">
+          <!-- Random -->
+          <div class="gc-section" id="gc-random">
+            <div class="gc-len-row"><span class="gc-lbl">Length: <strong id="gc-len-val">18</strong></span></div>
+            <input type="range" id="gc-len" class="gc-range" min="6" max="64" value="18" oninput="updateGenLen();genPassword()"/>
+            <div class="gc-range-marks"><span>6</span><span>20</span><span>40</span><span>64</span></div>
+            <div class="gc-toggles">
+              <label class="gct"><input type="checkbox" id="gc-upper" checked onchange="genPassword()"/><div class="gct-body"><span class="gct-char">A</span><span class="gct-name">Uppercase</span><span class="gct-ex">A–Z</span></div><div class="gct-check">✓</div></label>
+              <label class="gct"><input type="checkbox" id="gc-lower" checked onchange="genPassword()"/><div class="gct-body"><span class="gct-char">a</span><span class="gct-name">Lowercase</span><span class="gct-ex">a–z</span></div><div class="gct-check">✓</div></label>
+              <label class="gct"><input type="checkbox" id="gc-nums" checked onchange="genPassword()"/><div class="gct-body"><span class="gct-char">1</span><span class="gct-name">Numbers</span><span class="gct-ex">0–9</span></div><div class="gct-check">✓</div></label>
+              <label class="gct"><input type="checkbox" id="gc-syms" checked onchange="genPassword()"/><div class="gct-body"><span class="gct-char">#</span><span class="gct-name">Symbols</span><span class="gct-ex">!@#$</span></div><div class="gct-check">✓</div></label>
+              <label class="gct"><input type="checkbox" id="gc-ambi" onchange="genPassword()"/><div class="gct-body"><span class="gct-char" style="font-size:.8rem">0O</span><span class="gct-name">No similar</span><span class="gct-ex">0 O l I 1</span></div><div class="gct-check">✓</div></label>
+            </div>
+          </div>
+          <!-- Passphrase -->
+          <div class="gc-section hidden" id="gc-passphrase">
+            <div class="gc-len-row"><span class="gc-lbl">Words: <strong id="gc-wc-val">4</strong></span></div>
+            <input type="range" id="gc-wc" class="gc-range" min="3" max="8" value="4" oninput="updateGenWc();genPassphrase()"/>
+            <div class="gc-row"><label class="gc-lbl">Separator</label><select id="gc-sep" class="gc-select" onchange="genPassphrase()"><option value="-">Hyphen ( - )</option><option value=".">Dot ( . )</option><option value="_">Underscore</option><option value=" ">Space</option><option value="#">Hash ( # )</option></select></div>
+            <label class="gc-check-row"><input type="checkbox" id="gc-cap" checked onchange="genPassphrase()"/><span>Capitalize words</span></label>
+            <label class="gc-check-row"><input type="checkbox" id="gc-numsfx" checked onchange="genPassphrase()"/><span>Add number suffix</span></label>
+          </div>
+          <!-- PIN -->
+          <div class="gc-section hidden" id="gc-pin">
+            <div class="gc-len-row"><span class="gc-lbl">PIN length: <strong id="gc-pin-val">6</strong></span></div>
+            <input type="range" id="gc-pin-len" class="gc-range" min="4" max="12" value="6" oninput="updateGenPin();genPin()"/>
+            <div class="gc-range-marks"><span>4</span><span>6</span><span>8</span><span>12</span></div>
+          </div>
+          <div class="gen-actions">
+            <button class="btn-primary gen-btn" onclick="dispatchGen()"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="23 4 23 10 17 10"/><polyline points="1 20 1 14 7 14"/><path d="M3.51 9a9 9 0 0 1 14.85-3.36L23 10M1 14l4.64 4.36A9 9 0 0 0 20.49 15"/></svg>Generate</button>
+            <button class="btn-outline" onclick="useGen()"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>Use & Save</button>
+            <button class="btn-ghost icon-only" onclick="toggleGenHist()" title="History"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg></button>
+          </div>
+          <div class="gen-hist-panel hidden" id="gen-hist-panel">
+            <div class="ghp-hdr"><span>Recent Generated</span><button onclick="clearGenHist()">Clear</button></div>
+            <div id="ghp-list"></div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ─── AUDIT ─── -->
+    <section id="view-audit" class="view">
+      <div class="audit-top">
+        <div class="audit-ring-area">
+          <svg viewBox="0 0 130 130" class="audit-svg">
+            <circle cx="65" cy="65" r="55" fill="none" stroke="var(--bdr)" stroke-width="10"/>
+            <circle cx="65" cy="65" r="55" fill="none" stroke="url(#aud-g)" stroke-width="10" stroke-dasharray="345.4" stroke-dashoffset="345.4" id="aud-arc" stroke-linecap="round" transform="rotate(-90 65 65)"/>
+            <defs><linearGradient id="aud-g" x1="0%" y1="0%" x2="100%" y2="100%"><stop offset="0%" stop-color="#7c3aed"/><stop offset="100%" stop-color="#10b981"/></linearGradient></defs>
+          </svg>
+          <div class="audit-ring-center"><div class="aud-score" id="aud-score">—</div><div class="aud-score-lbl">Score</div></div>
+        </div>
+        <div class="audit-info">
+          <h2>Security Audit</h2>
+          <p id="aud-desc" class="aud-desc">Scan your vault for vulnerabilities.</p>
+          <div class="audit-badges" id="audit-badges"></div>
+          <button class="btn-primary" onclick="runAudit()"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="15" height="15"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>Run Full Audit</button>
+        </div>
+      </div>
+      <div id="audit-results" class="audit-results"></div>
+    </section>
+  </main>
+
+  <!-- Bottom Nav -->
+  <nav class="bnav" id="bnav">
+    <button class="bnav-i active" data-view="dashboard" onclick="goTo('dashboard')"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="7" height="7" rx="2"/><rect x="14" y="3" width="7" height="7" rx="2"/><rect x="3" y="14" width="7" height="7" rx="2"/><rect x="14" y="14" width="7" height="7" rx="2"/></svg><span>Home</span></button>
+    <button class="bnav-i" data-view="vault" onclick="goTo('vault')"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="11" width="18" height="11" rx="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg><span>Vault</span></button>
+    <div class="bnav-fab-wrap"><button class="bnav-fab" onclick="openModal()"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg></button></div>
+    <button class="bnav-i" data-view="generator" onclick="goTo('generator')"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 22c5.523 0 10-4.477 10-10S17.523 2 12 2 2 6.477 2 12s4.477 10 10 10z"/><path d="m9 12 2 2 4-4"/></svg><span>Generate</span></button>
+    <button class="bnav-i" data-view="audit" onclick="goTo('audit')"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg><span>Audit</span></button>
+  </nav>
+</div>
+
+
+<!-- ═══════ MODAL: ADD/EDIT PASSWORD ════════ -->
+<div id="modal-wrap" class="modal-wrap hidden" onclick="handleModalBg(event)">
+  <div class="modal" id="modal">
+    <div class="modal-hdr">
+      <div class="modal-hdr-left">
+        <div class="modal-av" id="modal-av"><span id="modal-av-txt">?</span></div>
+        <div><h3 id="modal-ttl">Add Password</h3><p class="modal-sub" id="modal-sub">Save a new credential</p></div>
+      </div>
+      <button class="modal-x" onclick="closeModal()"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg></button>
+    </div>
+    <form id="entry-form" onsubmit="saveEntry(event)">
+      <div class="modal-body">
+        <div class="mrow">
+          <div class="fgroup"><input type="text" id="e-site" class="finput" placeholder=" " required oninput="onSiteInput(this.value)" autocomplete="off"/><label class="flabel">Site / App Name *</label></div>
+          <div class="fgroup"><input type="url" id="e-url" class="finput" placeholder=" "/><label class="flabel">Website URL</label></div>
+        </div>
+        <div class="mrow">
+          <div class="fgroup"><input type="text" id="e-user" class="finput" placeholder=" " required autocomplete="off"/><label class="flabel">Username / Email *</label></div>
+          <div class="fgroup"><input type="text" id="e-tags" class="finput" placeholder=" " autocomplete="off"/><label class="flabel">Tags (comma-separated)</label></div>
+        </div>
+        <div class="fgroup pw-fgroup">
+          <input type="password" id="e-pw" class="finput" placeholder=" " required oninput="onPwInput(this.value)" autocomplete="new-password"/>
+          <label class="flabel">Password *</label>
+          <div class="pw-btns">
+            <button type="button" class="pw-btn" onclick="toggleVis('e-pw',this)" tabindex="-1"><svg class="ico-eye" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/><circle cx="12" cy="12" r="3"/></svg><svg class="ico-eye-off hidden" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M17.94 17.94A10.07 10.07 0 0 1 12 20c-7 0-11-8-11-8a18.45 18.45 0 0 1 5.06-5.94M9.9 4.24A9.12 9.12 0 0 1 12 4c7 0 11 8 11 8a18.5 18.5 0 0 1-2.16 3.19m-6.72-1.07a3 3 0 1 1-4.24-4.24"/><line x1="1" y1="1" x2="23" y2="23"/></svg></button>
+            <button type="button" class="pw-btn" onclick="fillGen()" tabindex="-1" title="Generate strong password"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="23 4 23 10 17 10"/><polyline points="1 20 1 14 7 14"/><path d="M3.51 9a9 9 0 0 1 14.85-3.36L23 10M1 14l4.64 4.36A9 9 0 0 0 20.49 15"/></svg></button>
+            <button type="button" class="pw-btn breach-btn" id="breach-btn" onclick="checkBreach()" tabindex="-1" title="Check if password was breached"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"/><line x1="12" y1="9" x2="12" y2="13"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg></button>
+          </div>
+        </div>
+        <div class="e-str-row"><div class="str-segs"><div class="ss" id="es0"></div><div class="ss" id="es1"></div><div class="ss" id="es2"></div><div class="ss" id="es3"></div></div><span class="str-lbl" id="e-str-lbl"></span><span class="breach-result hidden" id="breach-result"></span></div>
+
+        <!-- Visual Category Picker -->
+        <div class="cat-pick-wrap">
+          <span class="cat-pick-label">Category</span>
+          <div class="cat-picker" id="cat-picker">
+            <button type="button" class="cp-btn" data-cat="personal" onclick="pickCat('personal')"><span class="cp-emoji">👤</span><span>Personal</span></button>
+            <button type="button" class="cp-btn" data-cat="social" onclick="pickCat('social')"><span class="cp-emoji">📱</span><span>Social</span></button>
+            <button type="button" class="cp-btn" data-cat="work" onclick="pickCat('work')"><span class="cp-emoji">💼</span><span>Work</span></button>
+            <button type="button" class="cp-btn" data-cat="finance" onclick="pickCat('finance')"><span class="cp-emoji">💳</span><span>Finance</span></button>
+            <button type="button" class="cp-btn" data-cat="gaming" onclick="pickCat('gaming')"><span class="cp-emoji">🎮</span><span>Gaming</span></button>
+            <button type="button" class="cp-btn" data-cat="other" onclick="pickCat('other')"><span class="cp-emoji">📦</span><span>Other</span></button>
+          </div>
+          <input type="hidden" id="e-cat" value="personal"/>
+        </div>
+
+        <div class="mrow">
+          <div class="fav-toggle-row">
+            <span class="fav-toggle-lbl"><span>⭐</span>Mark as Favorite</span>
+            <label class="toggle-sw"><input type="checkbox" id="e-fav"/><span class="toggle-track"></span></label>
+          </div>
+          <div class="fgroup"><textarea id="e-notes" class="finput ftarea" placeholder=" " rows="2"></textarea><label class="flabel">Notes</label></div>
+        </div>
+      </div>
+      <div class="modal-ftr">
+        <button type="button" class="btn-ghost" onclick="closeModal()">Cancel</button>
+        <button type="submit" class="btn-primary"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="14" height="14"><path d="M19 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11l5 5v11a2 2 0 0 1-2 2z"/><polyline points="17 21 17 13 7 13 7 21"/></svg>Save Password</button>
+      </div>
+    </form>
+  </div>
+</div>
+
+<!-- ═══════ MODAL: SITE TEMPLATES ════════ -->
+<div id="templates-wrap" class="modal-wrap hidden" onclick="if(event.target===this)closeTemplates()">
+  <div class="modal tpl-modal">
+    <div class="modal-hdr">
+      <div class="modal-hdr-left">
+        <div class="modal-av" style="background:linear-gradient(135deg,#f59e0b,#f97316)"><span>⚡</span></div>
+        <div><h3>Quick Add</h3><p class="modal-sub">Select a popular site to pre-fill</p></div>
+      </div>
+      <button class="modal-x" onclick="closeTemplates()"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg></button>
+    </div>
+    <div class="tpl-search-bar">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="15" height="15"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.35-4.35"/></svg>
+      <input type="text" id="tpl-search" placeholder="Search sites…" oninput="filterTemplates(this.value)" autofocus/>
+    </div>
+    <div class="tpl-cats" id="tpl-cats">
+      <button class="tpl-cat-btn active" data-tcat="all" onclick="filterTplCat('all',this)">All</button>
+      <button class="tpl-cat-btn" data-tcat="social" onclick="filterTplCat('social',this)">📱 Social</button>
+      <button class="tpl-cat-btn" data-tcat="work" onclick="filterTplCat('work',this)">💼 Work</button>
+      <button class="tpl-cat-btn" data-tcat="finance" onclick="filterTplCat('finance',this)">💳 Finance</button>
+      <button class="tpl-cat-btn" data-tcat="personal" onclick="filterTplCat('personal',this)">👤 Personal</button>
+      <button class="tpl-cat-btn" data-tcat="gaming" onclick="filterTplCat('gaming',this)">🎮 Gaming</button>
+      <button class="tpl-cat-btn" data-tcat="other" onclick="filterTplCat('other',this)">📦 Other</button>
+    </div>
+    <div class="tpl-grid" id="tpl-grid"></div>
+  </div>
+</div>
+
+<!-- ═══════ MODAL: SETTINGS ════════ -->
+<div id="settings-wrap" class="modal-wrap hidden" onclick="if(event.target===this)closeSettings()">
+  <div class="modal settings-modal">
+    <div class="modal-hdr">
+      <div class="modal-hdr-left">
+        <div class="modal-av" style="background:linear-gradient(135deg,#64748b,#334155)"><span>⚙️</span></div>
+        <div><h3>Settings</h3><p class="modal-sub">Customize your Cipher experience</p></div>
+      </div>
+      <button class="modal-x" onclick="closeSettings()"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg></button>
+    </div>
+    <div class="settings-body">
+      <div class="settings-section">
+        <h4>🔒 Auto-Lock</h4>
+        <p>Automatically lock your vault after a period of inactivity.</p>
+        <div class="al-options">
+          <label class="al-opt"><input type="radio" name="al" value="0" checked onchange="setAutoLock(0)"/><span>Never</span></label>
+          <label class="al-opt"><input type="radio" name="al" value="5" onchange="setAutoLock(5)"/><span>5 min</span></label>
+          <label class="al-opt"><input type="radio" name="al" value="15" onchange="setAutoLock(15)"/><span>15 min</span></label>
+          <label class="al-opt"><input type="radio" name="al" value="30" onchange="setAutoLock(30)"/><span>30 min</span></label>
+          <label class="al-opt"><input type="radio" name="al" value="60" onchange="setAutoLock(60)"/><span>1 hour</span></label>
+        </div>
+      </div>
+      <div class="settings-section">
+        <h4>🎨 Appearance</h4>
+        <div class="theme-toggle-row">
+          <span>Dark Mode</span>
+          <label class="toggle-sw"><input type="checkbox" id="dark-toggle" onchange="toggleDark()"/><span class="toggle-track"></span></label>
+        </div>
+      </div>
+      <div class="settings-section danger-zone">
+        <h4>⚠️ Danger Zone</h4>
+        <p>Permanently delete all data in this vault. This cannot be undone.</p>
+        <button class="btn-danger" onclick="nukeVault()">Delete All Vault Data</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div id="sb-overlay" class="sb-ov hidden" onclick="toggleSb()"></div>
+<div id="toasts" class="toasts"></div>
+<script src="app.js"></script>
+</body>
+</html>
