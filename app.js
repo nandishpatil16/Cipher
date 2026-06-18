@@ -592,9 +592,9 @@ function pwCard(e,idx){
   const catEmoj={social:'📱',work:'💼',finance:'💳',personal:'👤',gaming:'🎮',other:'📦'}[e.category]||'📦';
   const tags=(e.tags||[]).slice(0,2).map(t=>`<span class="pw-tag">${esc(t)}</span>`).join('');
   const domain=e.url?domainOf(e.url):'';
-  const urlBtn=e.url?`<a class="pw-url-link" href="${esc(e.url)}" target="_blank" rel="noopener" title="Open ${domain}"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/><polyline points="15 3 21 3 21 9"/><line x1="10" y1="14" x2="21" y2="3"/></svg>${domain}</a>`:'';
+  const urlBtn=e.url?`<a class="pw-url-link" href="${esc(e.url)}" target="_blank" rel="noopener" title="Open ${domain}" onclick="event.stopPropagation()"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/><polyline points="15 3 21 3 21 9"/><line x1="10" y1="14" x2="21" y2="3"/></svg>${domain}</a>`:'';
   return`
-  <div class="pw-card${e.fav?' is-fav':''}${e.breached?' is-breached':''}" style="animation-delay:${idx*30}ms">
+  <div class="pw-card${e.fav?' is-fav':''}${e.breached?' is-breached':''}" style="animation-delay:${idx*30}ms" onclick="openModal('${e.id}')">
     <div class="pw-av-wrap">
       <div class="pw-av" style="background:${color}">${init}</div>
       <div class="pw-fav-star${e.fav?' show':''}">⭐</div>
@@ -605,7 +605,7 @@ function pwCard(e,idx){
       <div class="pw-user">${esc(e.username)}</div>
       <div class="pw-meta-row">
         <span class="pw-pass" id="ppw-${e.id}">••••••••</span>
-        <button onclick="togglePwVis('${e.id}')" class="pw-eye-mini"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/><circle cx="12" cy="12" r="3"/></svg></button>
+        <button onclick="togglePwVis('${e.id}'); event.stopPropagation();" class="pw-eye-mini"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/><circle cx="12" cy="12" r="3"/></svg></button>
         <span class="pw-age">${timeAgo(e.updated||e.created)}</span>
         ${urlBtn}
       </div>
@@ -615,12 +615,12 @@ function pwCard(e,idx){
       <span class="str-chip ${cls}">${label}</span>
     </div>
     <div class="pw-acts">
-      <button class="pw-act star" onclick="toggleFav('${e.id}')" title="${e.fav?'Unstar':'Star'}"><svg viewBox="0 0 24 24" fill="${e.fav?'var(--am)':'none'}" stroke="${e.fav?'var(--am)':'currentColor'}" stroke-width="2"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg></button>
-      <button class="pw-act copy" onclick="clipAndSave('${esc(e.username)}','${esc(e.site)}','Username')" title="Copy username"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M16 4h2a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2h2"/><rect x="8" y="2" width="8" height="4" rx="1" ry="1"/></svg></button>
-      <button class="pw-act copy" onclick="clipAndSave('${e.password.replace(/\\/g,'\\\\').replace(/'/g,"\\'")}','${esc(e.site)}','Password')" title="Copy password"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="11" width="18" height="11" rx="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg></button>
-      ${e.url?`<button class="pw-act open" onclick="window.open('${esc(e.url)}','_blank','noopener')" title="Open site"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/><polyline points="15 3 21 3 21 9"/><line x1="10" y1="14" x2="21" y2="3"/></svg></button>`:''}
-      <button class="pw-act edit" onclick="openModal('${e.id}')" title="Edit"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"/><path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"/></svg></button>
-      <button class="pw-act del" onclick="deleteEntry('${e.id}')" title="Delete"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="3 6 5 6 21 6"/><path d="M19 6l-1 14H6L5 6m5 0V4h4v2"/></svg></button>
+      <button class="pw-act star" onclick="toggleFav('${e.id}'); event.stopPropagation();" title="${e.fav?'Unstar':'Star'}"><svg viewBox="0 0 24 24" fill="${e.fav?'var(--am)':'none'}" stroke="${e.fav?'var(--am)':'currentColor'}" stroke-width="2"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg></button>
+      <button class="pw-act copy" onclick="clipAndSave('${esc(e.username)}','${esc(e.site)}','Username'); event.stopPropagation();" title="Copy username"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M16 4h2a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2h2"/><rect x="8" y="2" width="8" height="4" rx="1" ry="1"/></svg></button>
+      <button class="pw-act copy" onclick="clipAndSave('${e.password.replace(/\\/g,'\\\\').replace(/'/g,"\\'")}','${esc(e.site)}','Password'); event.stopPropagation();" title="Copy password"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="11" width="18" height="11" rx="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg></button>
+      ${e.url?`<button class="pw-act open" onclick="window.open('${esc(e.url)}','_blank','noopener'); event.stopPropagation();" title="Open site"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/><polyline points="15 3 21 3 21 9"/><line x1="10" y1="14" x2="21" y2="3"/></svg></button>`:''}
+      <button class="pw-act edit" onclick="openModal('${e.id}'); event.stopPropagation();" title="Edit"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"/><path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"/></svg></button>
+      <button class="pw-act del" onclick="deleteEntry('${e.id}'); event.stopPropagation();" title="Delete"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="3 6 5 6 21 6"/><path d="M19 6l-1 14H6L5 6m5 0V4h4v2"/></svg></button>
     </div>
   </div>`;
 }

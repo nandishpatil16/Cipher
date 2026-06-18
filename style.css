@@ -280,8 +280,8 @@ button{cursor:pointer;border:none;background:none}
 .tips-next svg{width:15px;height:15px}
 
 /* ══ VAULT / FILTER CATEGORIES ══ */
-.vault-bar{display:flex;flex-direction:column;gap:10px;margin-bottom:16px}
-.vsearch-row{display:flex;gap:10px;align-items:center}
+.vault-bar{display:flex;flex-direction:column;gap:10px;margin-bottom:16px;min-width:0;width:100%;box-sizing:border-box}
+.vsearch-row{display:flex;gap:10px;align-items:center;min-width:0;width:100%;box-sizing:border-box}
 .vsearch{flex:1;display:flex;align-items:center;gap:10px;background:var(--sur);border:1.5px solid var(--bdr);border-radius:var(--r-sm);padding:10px 14px;transition:border-color var(--dur),box-shadow var(--dur)}
 .vsearch:focus-within{border-color:var(--pu);box-shadow:0 0 0 3px rgba(124,58,237,.1)}
 .vsearch svg{width:16px;height:16px;color:var(--tx4);flex-shrink:0}
@@ -325,6 +325,7 @@ button{cursor:pointer;border:none;background:none}
   align-items:center;gap:12px;box-shadow:var(--sh1);
   transition:all .2s var(--spring);animation:cardIn .22s var(--spring) both;
   position:relative;overflow:hidden;
+  cursor:pointer;
 }
 .pw-card::before{content:'';position:absolute;left:0;top:0;bottom:0;width:3px;border-radius:2px 0 0 2px;background:transparent;transition:background .2s}
 .pw-card:hover{transform:translateY(-2px);box-shadow:var(--sh3);border-color:rgba(124,58,237,.14)}
@@ -605,7 +606,7 @@ button{cursor:pointer;border:none;background:none}
 @media(max-width:1100px){.dash-grid{grid-template-columns:1fr 1fr}.dash-card.span2{grid-column:1}.gen-layout{grid-template-columns:1fr}.qs-row{grid-template-columns:repeat(2,1fr)}}
 @media(max-width:860px){.auth-left{display:none}.auth-screen{grid-template-columns:1fr}.auth-right{padding:40px 24px}}
 @media(max-width:768px){
-  .sb{transform:translateX(-100%)}.sb.open{transform:translateX(0)}.tb-menu{display:flex}.main{margin-left:0;padding-bottom:var(--bn-h)}.bnav{display:flex}.view{padding:14px}.qs-row{grid-template-columns:repeat(2,1fr);gap:10px}.health-banner{padding:18px 20px}.mrow{grid-template-columns:1fr}.modal-wrap{align-items:flex-end;padding:0}.modal{border-bottom-left-radius:0;border-bottom-right-radius:0;max-height:94dvh}.toasts{bottom:calc(var(--bn-h)+8px);right:10px;left:10px}.toast{min-width:unset}.gc-toggles{grid-template-columns:1fr 1fr}
+  .sb{transform:translateX(-100%)}.sb.open{transform:translateX(0)}.tb-menu{display:flex}.main{margin-left:0;padding-bottom:var(--bn-h);min-width:0;width:100%;max-width:100%;box-sizing:border-box}.bnav{display:flex}.view{padding:14px;min-width:0;width:100%;max-width:100%;box-sizing:border-box}.qs-row{grid-template-columns:repeat(2,1fr);gap:10px}.health-banner{padding:18px 20px}.mrow{grid-template-columns:1fr}.modal-wrap{align-items:flex-end;padding:0}.modal{border-bottom-left-radius:0;border-bottom-right-radius:0;max-height:94dvh}.toasts{bottom:calc(var(--bn-h)+8px);right:10px;left:10px}.toast{min-width:unset}.gc-toggles{grid-template-columns:1fr 1fr}
   
   /* Stack dashboard grid cards on mobile to avoid squashed layout */
   .dash-grid{grid-template-columns:1fr}
@@ -635,8 +636,27 @@ button{cursor:pointer;border:none;background:none}
     font-size: 16px !important;
   }
 
+  /* Make search bar and quick add stretch full width on mobile */
+  .vsearch-row {
+    flex-direction: column;
+    align-items: stretch;
+    gap: 8px;
+    width: 100%;
+    box-sizing: border-box;
+  }
+  .vsearch {
+    width: 100%;
+    box-sizing: border-box;
+  }
+  .vsearch-row .btn-outline {
+    width: 100%;
+    justify-content: center;
+    box-sizing: border-box;
+  }
+
   /* Make category filters horizontally scrollable on mobile (saves vertical space) */
   .vfilters {
+    display: flex;
     flex-wrap: nowrap;
     overflow-x: auto;
     padding-bottom: 6px;
@@ -644,9 +664,16 @@ button{cursor:pointer;border:none;background:none}
     padding: 2px 14px 6px;
     -webkit-overflow-scrolling: touch;
     scrollbar-width: none;
+    width: calc(100% + 28px);
+    max-width: calc(100% + 28px);
+    min-width: 0;
+    box-sizing: border-box;
   }
   .vfilters::-webkit-scrollbar {
     display: none;
+  }
+  .vf {
+    flex-shrink: 0;
   }
 
   /* Re-layout password entries on mobile to prevent clipping & overlapping */
@@ -658,6 +685,10 @@ button{cursor:pointer;border:none;background:none}
       "actions actions";
     gap: 10px 12px;
     padding: 12px 14px;
+    overflow: visible; /* Ensure actions aren't hidden */
+    width: 100%;
+    max-width: 100%;
+    box-sizing: border-box;
   }
   .pw-av-wrap {
     grid-area: avatar;
@@ -689,5 +720,10 @@ button{cursor:pointer;border:none;background:none}
     margin-top: 6px;
   }
 }
-@media(max-width:500px){.qs-row{grid-template-columns:1fr 1fr}.health-right{display:none}.auth-card{padding:24px 16px}.tpl-grid{grid-template-columns:repeat(auto-fill,minmax(110px,1fr))}.vsearch-row{flex-direction:column}}
+@media(max-width:500px){
+  .qs-row{grid-template-columns:1fr 1fr}
+  .health-right{display:none}
+  .auth-card{padding:24px 16px}
+  .tpl-grid{grid-template-columns:repeat(auto-fill,minmax(110px,1fr))}
+}
 
