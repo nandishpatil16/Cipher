@@ -285,7 +285,7 @@ function nukeVault(){
 // ── Greeting ──────────────────────────────────────
 function setGreeting(){
   const h=new Date().getHours();
-  const g=h<5?'🌙 Good night':h<12?'☀️ Good morning':h<17?'👋 Good afternoon':h<21?'🌅 Good evening':'🌙 Good night';
+  const g=h<5?'👋 Welcome back':h<12?'☀️ Good morning':h<17?'👋 Good afternoon':h<21?'🌅 Good evening':'👋 Welcome back';
   $('tb-sub').textContent=g;
 }
 
@@ -809,4 +809,46 @@ window.addEventListener('DOMContentLoaded',()=>{
     const cd=$('clip-dropdown');
     if(!cd.classList.contains('hidden')&&!$('clip-btn').contains(e.target)&&!cd.contains(e.target))cd.classList.add('hidden');
   });
+});
+
+// ── PWA Installation Logic ────────────────────────
+let deferredPrompt;
+window.addEventListener('beforeinstallprompt', (e) => {
+  e.preventDefault();
+  deferredPrompt = e;
+  const installBtn = document.getElementById('settings-install-btn');
+  if (installBtn) {
+    installBtn.style.display = 'block';
+  }
+  const installBtnSb = document.getElementById('sb-install-btn');
+  if (installBtnSb) {
+    installBtnSb.classList.remove('hidden');
+  }
+});
+
+function installPWA() {
+  if (!deferredPrompt) return;
+  deferredPrompt.prompt();
+  deferredPrompt.userChoice.then((choiceResult) => {
+    if (choiceResult.outcome === 'accepted') {
+      console.log('User accepted the install prompt');
+    } else {
+      console.log('User dismissed the install prompt');
+    }
+    deferredPrompt = null;
+    const installBtn = document.getElementById('settings-install-btn');
+    if (installBtn) installBtn.style.display = 'none';
+    const installBtnSb = document.getElementById('sb-install-btn');
+    if (installBtnSb) installBtnSb.classList.add('hidden');
+  });
+}
+
+window.addEventListener('appinstalled', (evt) => {
+  console.log('Cipher was installed.');
+  const installBtn = document.getElementById('settings-install-btn');
+  if (installBtn) installBtn.style.display = 'none';
+  const installBtnSb = document.getElementById('sb-install-btn');
+  if (installBtnSb) installBtnSb.classList.add('hidden');
+  const status = document.getElementById('settings-pwa-status');
+  if (status) status.textContent = 'Cipher App is already installed on this device!';
 });

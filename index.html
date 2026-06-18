@@ -164,6 +164,10 @@
         <span>Security Audit</span>
         <span class="sb-badge danger" id="sb-issues">0</span>
       </button>
+      <button class="sb-btn hidden" id="sb-install-btn" onclick="installPWA()">
+        <div class="sb-ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><path d="M12 8v8M9 13l3 3 3-3"/></svg></div>
+        <span>Install App</span>
+      </button>
     </nav>
 
     <div class="sb-foot">
@@ -528,6 +532,12 @@
           <span>Dark Mode</span>
           <label class="toggle-sw"><input type="checkbox" id="dark-toggle" onchange="toggleDark()"/><span class="toggle-track"></span></label>
         </div>
+      </div>
+      <div class="settings-section" id="settings-pwa-section">
+        <h4>📱 App Installation</h4>
+        <p>Install Cipher to your device as a standalone application for fast, offline access.</p>
+        <button class="btn-primary" id="settings-install-btn" onclick="installPWA()" style="width:100%;display:none;margin-bottom:8px">Install Cipher App</button>
+        <span id="settings-pwa-status" style="font-size:.78rem;color:var(--tx3);font-weight:500">Your browser supports installing this app.</span>
       </div>
       <div class="settings-section danger-zone">
         <h4>⚠️ Danger Zone</h4>
